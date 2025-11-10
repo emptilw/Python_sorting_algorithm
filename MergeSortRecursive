@@ -1,0 +1,79 @@
+recursive_calls = 0  # Глобальний лічильник рекурсивних викликів
+
+def merge_sort_recursive(arr):
+    global recursive_calls
+    recursive_calls = 0  # Скидаємо лічильник перед сортуванням
+    sorted_arr, comparisons, assignments = merge_sort_recursive_with_counters(arr)
+    return sorted_arr, comparisons, assignments, recursive_calls
+
+def merge_sort_recursive_with_counters(arr):
+    global recursive_calls
+    recursive_calls += 1  # Лічимо кожен виклик функції
+    comparisons = 0
+    assignments = 0
+
+    print(f"Розділяємо масив: {arr}")
+    if len(arr) <= 1:
+        return arr, comparisons, assignments
+
+    mid = len(arr) // 2
+    left_half, c1, a1 = merge_sort_recursive_with_counters(arr[:mid])
+    right_half, c2, a2 = merge_sort_recursive_with_counters(arr[mid:])
+
+    comparisons += c1 + c2
+    assignments += a1 + a2
+
+    merged_arr, c_merge, a_merge = merge(left_half, right_half)
+    comparisons += c_merge
+    assignments += a_merge
+
+    return merged_arr, comparisons, assignments
+
+
+def merge(left, right):
+    print(f"Зливаємо {left} та {right}")
+    merged_arr = []
+    comparisons = 0
+    assignments = 0
+    i = 0
+    j = 0
+
+    while i < len(left) and j < len(right):
+        comparisons += 1
+        print(f"Порівняння: {left[i]} <= {right[j]} -> {left[i] <= right[j]}")
+        if left[i] <= right[j]:
+            merged_arr.append(left[i])
+            i += 1
+        else:
+            merged_arr.append(right[j])
+            j += 1
+        assignments += 1
+
+    while i < len(left):
+        print(f"Додаємо залишок з лівого масиву: {left[i]}")
+        merged_arr.append(left[i])
+        i += 1
+        assignments += 1
+
+    while j < len(right):
+        print(f"Додаємо залишок з правого масиву: {right[j]}")
+        merged_arr.append(right[j])
+        j += 1
+        assignments += 1
+
+    print(f"Злиття завершено. Результат: {merged_arr}")
+    return merged_arr, comparisons, assignments
+
+
+# --- Виконання ---
+print("Введіть кілька цілих чисел від 0 до 100 через пробіл:")
+A_input = list(map(int, input().split()))
+
+original = A_input.copy()
+sorted_list, total_comparisons, total_assignments, total_recursive_calls = merge_sort_recursive(A_input.copy())
+
+print("Оригінальний список:", original)
+print("Відсортований список:", sorted_list)
+print(f"Загальна кількість порівнянь: {total_comparisons}")
+print(f"Загальна кількість присвоювань: {total_assignments}")
+print(f"Загальна кількість рекурсивних викликів: {total_recursive_calls}")

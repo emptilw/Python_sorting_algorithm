@@ -114,8 +114,7 @@ def heap_sort(A):
     trace = []
     realisation = []
 
-    realisation.append(f"Початковий масив: {A}
-")
+    realisation.append(f"Початковий масив: {A}")
     realisation.append("--- Фаза 1: Побудова максимальної купи ---")
 
     for i in range(n // 2 - 1, -1, -1):
@@ -123,8 +122,7 @@ def heap_sort(A):
         sink(A, i, n, trace, "build")
         draw_heap(A, sorted_part=n)
 
-    realisation.append(f"Масив після побудови купи: {A}
-")
+    realisation.append(f"Масив після побудови купи: {A}")
 
     realisation.append("--- Фаза 2: Сортування ---")
     size = n
@@ -163,17 +161,14 @@ print()
 initial = A.copy()
 realisation_logs, trace_logs = heap_sort(A)
 
-print("
-=== РЕАЛІЗАЦІЯ АЛГОРИТМУ ===")
+print("=== РЕАЛІЗАЦІЯ АЛГОРИТМУ ===")
 for line in realisation_logs:
     print(line)
 
-print("
-=== ТРАСУВАННЯ АЛГОРИТМУ ===")
+print("=== ТРАСУВАННЯ АЛГОРИТМУ ===")
 for line in trace_logs:
     print(line)
 
-print("
-=== МОДЕЛЮВАННЯ (кількісні показники) ===")
+print("=== МОДЕЛЮВАННЯ (кількісні показники) ===")
 print(f"Кількість порівнянь: {comparisons}")
 print(f"Кількість присвоєнь: {assignments}")
